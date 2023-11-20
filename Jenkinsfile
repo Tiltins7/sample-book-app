@@ -46,6 +46,11 @@ pipeline {
 
 def build_docker_image(){
     echo "Building docker image"
+    echo "Building docker image.."
+    sh "docker build --no-cache -t tiltins/sample-book-app ."
+
+    echo "Pushing docker image to docker registry.."
+    sh "docker push tiltins/sample-book-app"
 }
 
 def run_unit_tests(){
