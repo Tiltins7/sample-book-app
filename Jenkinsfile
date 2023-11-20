@@ -4,14 +4,14 @@ pipeline {
         stage('build-docker-image') {
             steps {
                 scripts {
-                    build-docker-image()
+                    build_docker_image()
                 }
             }
         }
         stage('unit-test') {
             steps {
                 scripts {
-                    run-unit-tests()
+                    run_unit_tests()
                 }
             }
         }
@@ -60,11 +60,11 @@ pipeline {
     }
 }
 
-def build-docker-image() {
+def build_docker_image(){
     echo "Building docker image"
 }
 
-def run-unit-tests() {
+def run_unit_tests(){
     echo "Runing unit tests for node application in docker container"
 }
 
