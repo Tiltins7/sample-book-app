@@ -3,43 +3,75 @@ pipeline {
     stages {
         stage('build-docker-image') {
             steps {
-                echo "Building docker image..."
+                scripts {
+                    build-docker-image()
+                }
             }
         }
         stage('unit-test') {
             steps {
-                echo "Runing unit tests for node application in docker container"
+                scripts {
+                    run-unit-tests()
+                }
             }
         }
         stage('deploy-dev') {
             steps {
-                echo "Deployment triggering on dev"
+                scripts {
+                    deploy("Dev")
+                }
             }
         }
         stage('api-integration-tests-dev') {
             steps {
-                echo "Deployment triggering on dev"
+                scripts {
+                    deploy("Dev")
+                }
             }
         }
         stage('deploy-stg') {
             steps {
-                echo "Deployment triggering on stg"
+                scripts {
+                    deploy("STG")
+                }
             }
         }
         stage('api-integration-tests-stg') {
             steps {
-                echo "Deployment triggering on stg"
+                scripts {
+                    run_api_tests("STG")
+                }
             }
         }
         stage('deploy-prod') {
             steps {
-                echo "Deployment triggering on prod"
+                scripts {
+                    deploy("prod")
+                }
             }
         }
         stage('api-integration-tests-prod') {
             steps {
-                echo "Deployment triggering on prod"
+                scripts {
+                    run_api_tests("PROD")
+                }
             }
         }
     }
+}
+
+def build-docker-image() {
+    echo "Building docker image"
+}
+
+def run-unit-tests() {
+    echo "Runing unit tests for node application in docker container"
+}
+
+def deploy(String environment){
+    echo "Deployment triggered on ${environment} environment.."
+}
+
+def run_api_tests(String environment){
+    echo "API tests triggered on ${environment} environment.."
 }
