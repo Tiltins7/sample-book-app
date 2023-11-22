@@ -6,11 +6,6 @@ pipeline {
                 build_docker_image()
             }
         }
-        stage('unit-test') {
-            steps {
-                run_unit_tests()
-            }
-        }
         stage('deploy-dev') {
             steps {
                 deploy("Dev")
@@ -48,13 +43,9 @@ def build_docker_image(){
     echo "Building docker image"
     echo "Building docker image.."
     sh 'docker build --no-cache -t tiltins77/sample-book-app:latest .'
-
+    sh "docker run -rm --enterypoint=npm tiltins77/sample-book-app run test"
     echo "Pushing docker image to docker registry.."
     sh 'docker push tiltins77/sample-book-app:latest'
-}
-
-def run_unit_tests(){
-    echo "Runing unit tests for node application in docker container"
 }
 
 def deploy(String environment){
