@@ -8,22 +8,22 @@ pipeline {
         }
         stage('deploy-dev') {
             steps {
-                deploy("Dev")
+                deploy("dev")
             }
         }
         stage('api-integration-tests-dev') {
             steps {
-                deploy("Dev")
+                deploy("dev")
             }
         }
         stage('deploy-stg') {
             steps {
-                deploy("STG")
+                deploy("stg")
             }
         }
         stage('api-integration-tests-stg') {
             steps {
-                run_api_tests("STG")
+                run_api_tests("stg")
             }
         }
         stage('deploy-prod') {
@@ -50,6 +50,9 @@ def build_docker_image(){
 
 def deploy(String environment){
     echo "Deployment triggered on ${environment} environment.."
+    sh "docker-compose stop sample-book-app-${environment}"
+    sh "docker-compose rm sample-book-app-${environment}"
+    sh "docker-compose up -d sample-book-app-${environment}"
 }
 
 def run_api_tests(String environment){
