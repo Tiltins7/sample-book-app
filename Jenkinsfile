@@ -43,7 +43,7 @@ def build_docker_image(){
     echo "Building docker image"
     echo "Building docker image.."
     sh 'docker build --no-cache -t tiltins77/sample-book-app:latest .'
-    sh "docker run -rm --entrypoint=npm tiltins77/sample-book-app run test"
+    sh sh "docker run --rm --entrypoint=npm tiltins77/sample-book-app run test"
     echo "Pushing docker image to docker registry.."
     sh 'docker push tiltins77/sample-book-app:latest'
 }
